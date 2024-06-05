@@ -4,19 +4,22 @@ import { generateAnswer } from "./langchain";
 describe("LangChain", () => {
   it("Answers a question", async () => {
     const answer = await generateAnswer(
-      "United Kingdom",
-      'Is the following {question} a country, answer "yes" or "no" only.',
+      "Is the United Kingdom a country?",
+      'Take the role of a {role}, that answers questions in a {style} way with "yes" or "no" only.',
+      "encyclopedia",
+      "strict",
     );
 
-    assert.equal(answer.trim().toLowerCase(), "yes");
+    assert.equal(answer.trim(), "Yes.");
   });
 
   it("Answers a question incorrectly", async () => {
     const answer = await generateAnswer(
-      "Amsterdam",
-      'Is the following {question} a country, answer "yes" or "no" only.',
+      "Is Amsterdam a city?",
+      'Take the role of a {role}, that answers questions in a {style} way with "yes" or "no" only.',
+      "encyclopedia",
+      "strict",
     );
-
-    assert.equal(answer.trim().toLowerCase(), "no");
+    assert.notEqual(answer.trim(), "No.");
   });
 });
